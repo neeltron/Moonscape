@@ -48,14 +48,14 @@ void loop()
         poorQuality = 200;
         attention = payloadData[4];
         meditation = payloadData[5];
-#if !DEBUGOUTPUT
+      #if !DEBUGOUTPUT
         if (bigPacket)
         {
           Serial.print(meditation, DEC);
           lastReceivedPacket = millis();
           Serial.print("\n");
         }
-#endif
+      #endif
         bigPacket = false;
       }
       else {
