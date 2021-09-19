@@ -9,6 +9,7 @@ def intro():
 def input():
   if request.method == 'GET':
     sleep = request.args.get('sleep')
+    print(sleep)
   return sleep
 
 app.run(host='0.0.0.0', port=8080)
