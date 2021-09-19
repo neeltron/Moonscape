@@ -1,3 +1,6 @@
+#include <SoftwareSerial.h>
+SoftwareSerial s(5, 6);
+
 #define BAUDRATE 57600
 #define DEBUGOUTPUT 0
 #define powercontrol 10
@@ -13,6 +16,7 @@ long lastReceivedPacket = 0;
 boolean bigPacket = false;
 void setup()
 {
+  s.begin(BAUDRATE);
   Serial.begin(BAUDRATE);
 }
 byte ReadOneByte()
@@ -20,9 +24,9 @@ byte ReadOneByte()
   int ByteRead;
   while (!Serial.available());
   ByteRead = Serial.read();
-#if DEBUGOUTPUT
-  Serial.print((char)ByteRead);
-#endif
+  #if DEBUGOUTPUT
+    Serial.print((char)ByteRead);
+  #endif
   return ByteRead;
 }
 void loop()
@@ -52,6 +56,7 @@ void loop()
         if (bigPacket)
         {
           Serial.print(meditation, DEC);
+          s.write(meditation);
           lastReceivedPacket = millis();
           Serial.print("\n");
         }
