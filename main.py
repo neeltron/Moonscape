@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from replit import db
 import datetime
 app = Flask('app')
@@ -20,7 +20,14 @@ def input():
     db[timestamp] = sleep
     print(timestamp)
     print(sleep)
-
   return sleep
+
+@app.route('/endpoint', methods = ['GET'])
+def endpoint():
+  sleep_data = []
+  if request.method == 'GET':
+    for i in db:
+      sleep_data.append({'timestamp': i, 'sleep_level': db[i]})
+  return jsonify(sleep_data)
 
 app.run(host='0.0.0.0', port=8080)
